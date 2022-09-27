@@ -1,21 +1,33 @@
 body {
-  align-content: center;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
-  height: 100vh;
+    align-content: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    height: 100vh;
+    margin: 0;
 }
 
 #gameTitle {
-  font-family: cursive;
-  font-size: xx-large;
+    font-family: cursive;
+    font-size: xx-large;
 }
 
 #gameTitle, #gameCaption {
-  text-align: center;
+    text-align: center;
 }
 
 #game {
-  margin: auto;
-  width: min-content;
+    margin: auto;
+    width: min-content;
+}
+
+@media (max-width: 480px) {
+    #gameTitle, #gameCaption {
+        display: none;
+    }
+
+    #game {
+        height: 100vh;
+        width: 100vw;
+    }
 }

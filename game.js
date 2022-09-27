@@ -26,37 +26,39 @@ var mainState = {
         this.bird.anchor.setTo(-0.2, 0.5); 
  
         var spaceKey = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
-        spaceKey.onDown.add(this.jump, this); 
+        // spaceKey.onDown.add(this.jump, this); 
 
         this.score = 0;
         this.labelScore = this.game.add.text(20, 20, "0", { font: "30px Arial", fill: "#ffffff" });  
         this.pauseState = this.game.add.text(110, 230, "", { font: "bold 45px Arial", fill: "#ffffff", stroke: "#000000", strokeThickness: 5 });
 
-        var escKey = this.game.input.keyboard.addKey(Phaser.Keyboard.ESC);
-        escKey.onDown.add(this.pauseOrResumeGame, this);
-        spaceKey.onDown.add(function() {
-            if (this.game.paused) {
-                this.pauseOrResumeGame();
-            }
-        }, this);
-
-        this.game.input.mouse.mouseDownCallback = (e) => {
-            if (e.button === Phaser.Mouse.LEFT_BUTTON) {
-                if (this.game.paused) {
-                    this.pauseOrResumeGame();
-                } else {
-                    this.jump();
-                }
-            }
-        };
-
-        this.game.input.touch.touchStartCallback = (e) => {
+        var clickCallback = (e) => {
             if (this.game.paused) {
                 this.pauseOrResumeGame();
             } else {
                 this.jump();
             }
         };
+
+        var escKey = this.game.input.keyboard.addKey(Phaser.Keyboard.ESC);
+        escKey.onDown.add(this.pauseOrResumeGame, this);
+        spaceKey.onDown.add(clickCallback, this);
+
+        if (window.matchMedia('(any-pointer: fine)')) {
+            this.game.input.mouse.mouseDownCallback = (e) => {
+                if (e.button === Phaser.Mouse.LEFT_BUTTON) {
+                    clickCallback(e);
+                };
+            }
+        }
+
+        if (window.matchMedia('(any-pointer: coarse)')) {
+            this.game.input.touch.touchStartCallback = clickCallback;
+        }
+
+        if (window.matchMedia('(max-width: 480px) and (pointer: coarse) and (not (any-pointer: fine))')) {
+            game.scale.scaleMode = Phaser.ScaleManager.EXACT_FIT;
+        }
 
         // Add the jump sound
         this.jumpSound = this.game.add.audio('jump');
