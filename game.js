@@ -1,3 +1,10 @@
+var width = 400, height = 490;
+
+if (window.matchMedia('(max-width: 400px)')) {
+    width = parseInt(getComputedStyle(document.body).width) * 0,8;
+    height = parseInt(getComputedStyle(document.body).width);
+}
+
 var game = new Phaser.Game(400, 490, Phaser.AUTO, 'game');
 
 var mainState = {
