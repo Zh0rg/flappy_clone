@@ -1,7 +1,3 @@
-if (window.matchMedia('(max-width: 480px) and (pointer: coarse) and (not (any-pointer: fine))')) {
-    Phaser.scaleModes.DEFAULT = Phaser.ScaleManager.RESIZE;
-}
-
 var game = new Phaser.Game(400, 490, Phaser.AUTO, 'game');
 
 var mainState = {
@@ -30,7 +26,7 @@ var mainState = {
         this.bird.anchor.setTo(-0.2, 0.5); 
  
         var spaceKey = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
-        // spaceKey.onDown.add(this.jump, this); 
+        spaceKey.onDown.add(this.jump, this); 
 
         this.score = 0;
         this.labelScore = this.game.add.text(20, 20, "0", { font: "30px Arial", fill: "#ffffff" });  
@@ -48,17 +44,13 @@ var mainState = {
         escKey.onDown.add(this.pauseOrResumeGame, this);
         spaceKey.onDown.add(clickCallback, this);
 
-        if (window.matchMedia('(any-pointer: fine)')) {
-            this.game.input.mouse.mouseDownCallback = (e) => {
-                if (e.button === Phaser.Mouse.LEFT_BUTTON) {
-                    clickCallback(e);
-                };
-            }
+        this.game.input.mouse.mouseDownCallback = (e) => {
+            if (e.button === Phaser.Mouse.LEFT_BUTTON) {
+                clickCallback(e);
+            };
         }
 
-        if (window.matchMedia('(any-pointer: coarse)')) {
-            this.game.input.touch.touchStartCallback = clickCallback;
-        }
+        this.game.input.touch.touchStartCallback = clickCallback;
 
         // Add the jump sound
         this.jumpSound = this.game.add.audio('jump');
