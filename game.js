@@ -30,6 +30,10 @@ var mainState = {
 
         this.score = 0;
         this.labelScore = this.game.add.text(20, 20, "0", { font: "30px Arial", fill: "#ffffff" });  
+        this.pauseState = this.game.add.text(110, 230, "", { font: "bold 45px Arial", fill: "#ffffff", stroke: "#000000", strokeThickness: 5 });
+
+        var escKey = this.game.input.keyboard.addKey(Phaser.Keyboard.ESC);
+        escKey.onDown.add(this.pauseOrResumeGame, this);
 
         // Add the jump sound
         this.jumpSound = this.game.add.audio('jump');
@@ -78,6 +82,18 @@ var mainState = {
         game.state.start('main');
     },
 
+    pauseOrResumeGame: function() {
+        var paused = this.game.paused;
+
+        if (!paused) {
+            this.game.paused = true;
+            this.pauseState.text = "PAUSED";
+        } else {
+            this.game.paused = false;
+            this.pauseState.text = "";
+        }
+    },
+
     addOnePipe: function(x, y) {
         var pipe = this.pipes.getFirstDead();
 
@@ -101,3 +117,9 @@ var mainState = {
 
 game.state.add('main', mainState);  
 game.state.start('main'); 
+
+// document.addEventListener("keydown", function pause(e) {
+//     if (e.code === "Escape") {
+//         game.paused = !game.paused
+//     }   
+// })
