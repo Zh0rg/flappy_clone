@@ -34,6 +34,21 @@ var mainState = {
 
         var escKey = this.game.input.keyboard.addKey(Phaser.Keyboard.ESC);
         escKey.onDown.add(this.pauseOrResumeGame, this);
+        spaceKey.onDown.add(function() {
+            if (this.game.paused) {
+                this.pauseOrResumeGame();
+            }
+        }, this);
+
+        this.game.input.mouse.mouseDownCallback = (e) => {
+            if (e.button === Phaser.Mouse.LEFT_BUTTON) {
+                if (this.game.paused) {
+                    this.pauseOrResumeGame();
+                } else {
+                    this.jump();
+                }
+            }
+        };
 
         // Add the jump sound
         this.jumpSound = this.game.add.audio('jump');
