@@ -41,13 +41,21 @@ var mainState = {
         }, this);
 
         this.game.input.mouse.mouseDownCallback = (e) => {
-            // if (e.button === Phaser.Mouse.LEFT_BUTTON) {
+            if (e.button === Phaser.Mouse.LEFT_BUTTON) {
                 if (this.game.paused) {
                     this.pauseOrResumeGame();
                 } else {
                     this.jump();
                 }
-            // }
+            }
+        };
+
+        this.game.input.touch.touchStartCallback = (e) => {
+            if (this.game.paused) {
+                this.pauseOrResumeGame();
+            } else {
+                this.jump();
+            }
         };
 
         // Add the jump sound
