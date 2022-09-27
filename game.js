@@ -32,31 +32,25 @@ var mainState = {
         this.labelScore = this.game.add.text(20, 20, "0", { font: "30px Arial", fill: "#ffffff" });  
         this.pauseState = this.game.add.text(110, 230, "", { font: "bold 45px Arial", fill: "#ffffff", stroke: "#000000", strokeThickness: 5 });
 
-        var escKey = this.game.input.keyboard.addKey(Phaser.Keyboard.ESC);
-        escKey.onDown.add(this.pauseOrResumeGame, this);
-        spaceKey.onDown.add(function() {
-            if (this.game.paused) {
-                this.pauseOrResumeGame();
-            }
-        }, this);
-
-        this.game.input.mouse.mouseDownCallback = (e) => {
-            if (e.button === Phaser.Mouse.LEFT_BUTTON) {
-                if (this.game.paused) {
-                    this.pauseOrResumeGame();
-                } else {
-                    this.jump();
-                }
-            }
-        };
-
-        this.game.input.touch.touchStartCallback = (e) => {
+        var clickCallback = (e) => {
             if (this.game.paused) {
                 this.pauseOrResumeGame();
             } else {
                 this.jump();
             }
         };
+
+        var escKey = this.game.input.keyboard.addKey(Phaser.Keyboard.ESC);
+        escKey.onDown.add(this.pauseOrResumeGame, this);
+        spaceKey.onDown.add(clickCallback, this);
+
+        this.game.input.mouse.mouseDownCallback = (e) => {
+            if (e.button === Phaser.Mouse.LEFT_BUTTON) {
+                clickCallback(e);
+            };
+        }
+
+        this.game.input.touch.touchStartCallback = clickCallback;
 
         // Add the jump sound
         this.jumpSound = this.game.add.audio('jump');
