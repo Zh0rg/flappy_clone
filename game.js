@@ -50,6 +50,14 @@ var mainState = {
             }
         };
 
+        this.game.input.touch.touchStartCallback = (e) => {
+            if (this.game.paused) {
+                this.pauseOrResumeGame();
+            } else {
+                this.jump();
+            }
+        };
+
         // Add the jump sound
         this.jumpSound = this.game.add.audio('jump');
     },
