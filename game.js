@@ -1,3 +1,7 @@
+if (window.matchMedia('(max-width: 480px) and (pointer: coarse) and (not (any-pointer: fine))')) {
+    Phaser.scaleModes.DEFAULT = Phaser.ScaleManager.RESIZE;
+}
+
 var game = new Phaser.Game(400, 490, Phaser.AUTO, 'game');
 
 var mainState = {
@@ -54,10 +58,6 @@ var mainState = {
 
         if (window.matchMedia('(any-pointer: coarse)')) {
             this.game.input.touch.touchStartCallback = clickCallback;
-        }
-
-        if (window.matchMedia('(max-width: 480px) and (pointer: coarse) and (not (any-pointer: fine))')) {
-            game.scale.scaleMode = Phaser.ScaleManager.RESIZE;
         }
 
         // Add the jump sound
