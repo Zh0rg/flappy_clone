@@ -57,7 +57,7 @@ var mainState = {
         }
 
         if (window.matchMedia('(max-width: 480px) and (pointer: coarse) and (not (any-pointer: fine))')) {
-            game.scale.scaleMode = Phaser.ScaleManager.EXACT_FIT;
+            game.scale.scaleMode = Phaser.ScaleManager.RESIZE;
         }
 
         // Add the jump sound
