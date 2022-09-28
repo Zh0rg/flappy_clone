@@ -1,8 +1,8 @@
 var width = 400, height = 490;
 
-if (window.matchMedia('(max-width: 400px)')) {
-    width = parseInt(getComputedStyle(document.body).width) * 0,8;
-    height = parseInt(getComputedStyle(document.body).width);
+if (parseInt(getComputedStyle(document.body).width) < 400) {
+    width *= 0.8;
+    height *= 0.8;
 }
 
 var game = new Phaser.Game(width, height, Phaser.AUTO, 'game');
@@ -141,9 +141,3 @@ var mainState = {
 
 game.state.add('main', mainState);  
 game.state.start('main'); 
-
-// document.addEventListener("keydown", function pause(e) {
-//     if (e.code === "Escape") {
-//         game.paused = !game.paused
-//     }   
-// })
