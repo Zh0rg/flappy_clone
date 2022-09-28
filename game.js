@@ -1,11 +1,7 @@
-var width = 400, height = 490;
+var smallScreen =  parseInt(getComputedStyle(document.body).width) < 400;
+var scale = smallScreen ? 0.8 : 1;
 
-if (parseInt(getComputedStyle(document.body).width) < 400) {
-    width *= 0.8;
-    height *= 0.8;
-}
-
-var game = new Phaser.Game(width, height, Phaser.AUTO, 'game');
+var game = new Phaser.Game(400 * scale, 490 * scale, Phaser.AUTO, 'game');
 
 var mainState = {
 
@@ -25,7 +21,7 @@ var mainState = {
         this.pipes.createMultiple(20, 'pipe');  
         this.timer = this.game.time.events.loop(1500, this.addRowOfPipes, this);           
 
-        this.bird = this.game.add.sprite(100, 245, 'bird');
+        this.bird = this.game.add.sprite(100 * scale, 245 * scale, 'bird');
         game.physics.arcade.enable(this.bird);
         this.bird.body.gravity.y = 1000; 
 
@@ -37,7 +33,7 @@ var mainState = {
 
         this.score = 0;
         this.labelScore = this.game.add.text(20, 20, "0", { font: "30px Arial", fill: "#ffffff" });  
-        this.pauseState = this.game.add.text(110, 230, "", { font: "bold 45px Arial", fill: "#ffffff", stroke: "#000000", strokeThickness: 5 });
+        this.pauseState = this.game.add.text(110 * scale, 230 * scale, "", { font: "bold 45px Arial", fill: "#ffffff", stroke: "#000000", strokeThickness: 5 });
 
         var clickCallback = (e) => {
             if (this.game.paused) {
@@ -128,11 +124,11 @@ var mainState = {
     },
 
     addRowOfPipes: function() {
-        var hole = Math.floor(Math.random()*5)+1;
+        var hole = Math.floor(Math.random()*(3+!smallScreen*2))+1;
         
         for (var i = 0; i < 8; i++)
-            if (i != hole && i != hole +1) 
-                this.addOnePipe(400, i*60+10);   
+            if (i != hole && i != hole +1 && (i != hole +2 || !smallScreen))
+                this.addOnePipe(400 * scale, (i*60) * scale +10);   
     
         this.score += 1;
         this.labelScore.text = this.score;  
