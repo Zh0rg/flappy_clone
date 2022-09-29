@@ -33,7 +33,7 @@ var mainState = {
 
         this.score = 0;
         this.labelScore = this.game.add.text(20, 20, "0", { font: "30px Arial", fill: "#ffffff" });  
-        this.pauseState = this.game.add.text(110 * scale, 230 * scale, "", { font: "bold 45px Arial", fill: "#ffffff", stroke: "#000000", strokeThickness: 5 });
+        this.pauseState = this.game.add.text(smallScreen ? 72 : 110, 230 * scale, "", { font: "bold 45px Arial", fill: "#ffffff", stroke: "#000000", strokeThickness: 5 });
 
         var clickCallback = (e) => {
             if (this.game.paused) {
